@@ -1,10 +1,12 @@
 /*
  * @Description: 
  * @Date: 2024-06-27 17:11:55
- * @LastEditTime: 2024-06-27 17:21:35
+ * @LastEditTime: 2024-08-27 11:07:23
  */
 import SideNav from '@/app/ui/dashboard/sidenav';
 import '@/app/ui/global.css';
+
+export const experimental_ppr = true;
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
