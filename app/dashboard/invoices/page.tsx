@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2024-08-27 11:07:09
- * @LastEditTime: 2024-09-11 17:47:25
+ * @LastEditTime: 2024-09-11 17:51:12
  */
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
