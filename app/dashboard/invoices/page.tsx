@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2024-08-27 11:07:09
- * @LastEditTime: 2024-09-11 17:51:12
+ * @LastEditTime: 2024-09-12 17:11:50
  */
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
@@ -10,6 +10,8 @@ import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
+import { fetchInvoicesPages } from '@/app/lib/data';
+
  
 export default async function Page({
   searchParams,
@@ -21,6 +23,7 @@ export default async function Page({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchInvoicesPages(query);
   
   return (
     <div className="w-full">
@@ -37,7 +40,7 @@ export default async function Page({
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
