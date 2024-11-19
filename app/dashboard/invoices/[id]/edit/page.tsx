@@ -1,11 +1,12 @@
 /*
  * @Description: 
  * @Date: 2024-11-12 11:03:47
- * @LastEditTime: 2024-11-12 15:19:03
+ * @LastEditTime: 2024-11-13 16:38:10
  */
 import Form from '@/app/ui/invoices/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import { notFound } from 'next/navigation';
  
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -14,6 +15,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     fetchInvoiceById(id),
     fetchCustomers()
   ])
+  if (!invoice) {
+    notFound();
+  }
   return (
     <main>
       <Breadcrumbs
