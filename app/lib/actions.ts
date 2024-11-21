@@ -1,13 +1,15 @@
 /*
  * @Description: 
  * @Date: 2024-11-11 14:23:43
- * @LastEditTime: 2024-11-19 11:02:52
+ * @LastEditTime: 2024-11-21 10:52:24
  */
 'use server';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
  
 const FormSchema = z.object({
   id: z.string(),
@@ -107,5 +109,24 @@ export async function deleteInvoice(id:string) {
    return {
     message: '数据库错误： 删除表数据失败'
    }
+  }
+}
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return '用户名或者密码错误.';
+        default:
+          return '登陆失败.';
+      }
+    }
+    throw error;
   }
 }
